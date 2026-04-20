@@ -88,9 +88,12 @@ Integrate a video SDK, Show:
 
 ### Data Layer
 
-* No real API required
-* Code should support easy API integration
+Use a local JSON file or mock data.
 
+Your implementation should:
+
+* Simulate API behavior 
+* Be easily replaceable with a real API
 ---
 
 ### Basic Chat
@@ -113,7 +116,7 @@ Integrate a video SDK, Show:
 
 ---
 
-## ⏳ Timeline
+## Timeline
 
 **4–5 Days**
 
