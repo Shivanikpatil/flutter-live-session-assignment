@@ -1,136 +1,128 @@
-# Live Session App – Flutter Assignment (Senior Level)
+# Flutter Assignment – Live Session App
 
 ## Overview
 
-Build a Flutter application that simulates a platform where users can discover, book, and join live sessions (e.g., fitness, meditation, etc.).
+Build a Flutter application that simulates a **Live Session Platform** (fitness, meditation, workshops, etc.) where users can:
+
+* Discover sessions
+* Book sessions
+* Join live sessions
+* Rejoin ongoing sessions
+
+This assignment is intentionally designed to evaluate **senior-level engineering, architecture, and system thinking**.
 
 ---
 
 ## Core Features
 
-* View sessions categorized as:
+### 1. Session Listing
+
+* Categories:
 
   * Upcoming
   * Live
   * Completed
-
-* View session details
-
-* Book/register for sessions
-
-* Join live session (simulated UI)
+* Pagination required
 
 ---
 
-## Key Requirements
+### 2. Session Details
 
-### 1. Architecture
-
-* Use a scalable architecture
-* Ensure clear separation of concerns
+* Title, instructor, time, description, etc
+* Session state handling
 
 ---
 
-### 2. State Management
+### 3. Booking
 
-* Use a structured state management approach 
-
----
-
-### 3. Pagination
-
-* Implement pagination for session listing
-* Simulate large datasets
+* User can book/register
+* Persist locally
 
 ---
 
-### 4. Offline Support
+## Mandatory: Live Session
 
-* Cache data locally
-* Show last available data when offline
-
----
-
-### 5. Booking & Persistence
-
-* Persist user bookings locally
-
----
-
-### 6. Session State Handling
-
-* Handle transitions:
-
-  * upcoming → live → completed
-
----
-
-### 7. Live Session Simulation
-
-* Display:
-
+Implement **Live Session capability** 
+Integrate a video SDK, Show:
+  * Join session
   * Live indicator
-  * Session timer (countdown or running)
-  * Placeholder UI for video
+  * Basic participant state
 
 ---
 
-### 8. Rejoin Session
+### Live Session Requirements
 
-* Allow user to rejoin session if they leave
+* Join live session
+* Show:
 
----
+  * Live status
+  * Session timer (sync)
+* Handle:
 
-### 9. Basic Chat (Mocked or Polling-Based)
-
-* Implement simple chat UI
-* Real-time not required
-
----
-
-## Data Source
-
-Use a local JSON file or mock data.
-
-Your implementation should:
-
-* Simulate API behavior (delay, pagination)
-* Be easily replaceable with a real API
+  * Rejoin after leaving
+  * App background/foreground
 
 ---
 
-## Deliverables
+## Additional Requirements
 
-* Updated GitHub repository
-* APK file
-* README with:
-  * Architecture explanation
-  * State Management
-  * Data Layer Design
-  * Trade-offs
-  * Improvements
-  * Assumptions
-* Loom video (5–10 min walkthrough)
+### Architecture
+
+* Clean, scalable architecture
+* Proper separation of concerns
 
 ---
 
-## Timeline
+### State Management
 
-48 hours
-
----
-
-## Evaluation Focus
-
-* Architecture quality
-* Code structure
-* State management
-* Problem-solving approach
-* Scalability thinking
+* Use any structured approach
 
 ---
 
-## Optional Bonus
+### Offline Support
 
-* Integrate video streaming SDK
-* Improve chat system
+* Cache session data
+* Show last known state
+
+---
+
+### Data Layer
+
+* No real API required
+* Code should support easy API integration
+
+---
+
+### Basic Chat
+
+* Mocked or polling-based chat inside session
+
+---
+
+## Submission Requirements
+
+1. GitHub Repository (with commit history)
+2. APK
+3. README including:
+   * Architecture decisions
+   * State management choice
+   * Trade-offs
+   * Assumptions
+   * Improvements
+4. 5–10 min Loom video
+
+---
+
+## ⏳ Timeline
+
+**4–5 Days**
+
+---
+
+## Important Notes
+
+* Focus on scalability and structure over UI polish
+* We value clarity of thinking as much as code quality
+* Be prepared to extend your solution in discussion
+
+---
