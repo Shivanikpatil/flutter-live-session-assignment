@@ -26,14 +26,14 @@ Build a Flutter application that simulates a platform where users can discover, 
 
 ### 1. Architecture
 
-* Use a scalable architecture (Clean Architecture / MVVM preferred)
+* Use a scalable architecture
 * Ensure clear separation of concerns
 
 ---
 
 ### 2. State Management
 
-* Use a structured state management approach (Bloc / Riverpod / Provider)
+* Use a structured state management approach 
 
 ---
 
@@ -96,31 +96,6 @@ Your implementation should:
 
 * Simulate API behavior (delay, pagination)
 * Be easily replaceable with a real API
-
----
-
-## Sample Data
-
-```json
-[
-  {
-    "id": "1",
-    "title": "Morning Fitness",
-    "instructor": "Amit Sharma",
-    "startTime": "2026-04-20T08:00:00Z",
-    "endTime": "2026-04-20T09:00:00Z",
-    "status": "upcoming"
-  }
-]
-```
-
----
-
-## Constraints
-
-* Do NOT put business logic in UI
-* Do NOT hardcode everything in one file
-* Use proper layering (data/domain/presentation)
 
 ---
 
