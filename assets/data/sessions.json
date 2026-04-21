@@ -1,0 +1,22 @@
+[
+  {
+    "id": "1",
+    "title": "Introduction to Clean Architecture",
+    "description": "Learn the basics of clean architecture in Flutter.",
+    "speaker": "John Doe",
+    "startTime": "2023-11-20T10:00:00Z",
+    "duration": 60,
+    "status": "upcoming",
+    "imageUrl": "https://example.com/image1.jpg"
+  },
+  {
+    "id": "2",
+    "title": "Live Coding: BLoC Pattern",
+    "description": "Building a real-time app using BLoC.",
+    "speaker": "Jane Smith",
+    "startTime": "2023-11-20T11:00:00Z",
+    "duration": 90,
+    "status": "live",
+    "imageUrl": "https://example.com/image2.jpg"
+  }
+]
