@@ -7,14 +7,18 @@ import '../blocs/session/session_state.dart';
 import '../widgets/session_card.dart';
 import 'session_details_screen.dart';
 
+/// The primary entry screen of the application showing session listings.
+/// Features: Category filtering, real-time live indicator, and sticky headers.
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // CustomScrollView allows for advanced layout effects like floating AppBars and Slivers.
       body: CustomScrollView(
         slivers: [
+          // Collapsible AppBar with branding
           SliverAppBar(
             expandedHeight: 120.0,
             floating: true,
@@ -32,6 +36,7 @@ class HomeScreen extends StatelessWidget {
               centerTitle: false,
             ),
             actions: [
+              // User Profile Avatar placeholder
               Padding(
                 padding: const EdgeInsets.only(right: 16),
                 child: CircleAvatar(
@@ -41,6 +46,8 @@ class HomeScreen extends StatelessWidget {
               ),
             ],
           ),
+          
+          // Header and Category Filter section
           SliverToBoxAdapter(
             child: Padding(
               padding: const EdgeInsets.fromLTRB(20, 8, 20, 16),
@@ -55,11 +62,13 @@ class HomeScreen extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 20),
-                  const CategoryFilter(),
+                  const CategoryFilter(), // Modularized filter component
                 ],
               ),
             ),
           ),
+          
+          // Reactive List showing filtered gym sessions
           BlocBuilder<SessionBloc, SessionState>(
             builder: (context, state) {
               if (state is SessionLoading) {
@@ -73,6 +82,7 @@ class HomeScreen extends StatelessWidget {
                     child: Center(child: Text('No sessions found in this category')),
                   );
                 }
+                // Efficient scrolling list for high performance with many items
                 return SliverPadding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   sliver: SliverList(
@@ -82,6 +92,7 @@ class HomeScreen extends StatelessWidget {
                         return SessionCard(
                           session: session,
                           onTap: () {
+                            // Navigate to Details with hero transition tag
                             Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -103,13 +114,15 @@ class HomeScreen extends StatelessWidget {
               return const SliverToBoxAdapter(child: SizedBox.shrink());
             },
           ),
-          const SliverToBoxAdapter(child: SizedBox(height: 40)),
+          const SliverToBoxAdapter(child: SizedBox(height: 40)), // Bottom padding
         ],
       ),
     );
   }
 }
 
+/// Horizontal scrollable chips for session filtering.
+/// Dynamically updates the [SessionBloc] state.
 class CategoryFilter extends StatelessWidget {
   const CategoryFilter({super.key});
 
@@ -133,6 +146,7 @@ class CategoryFilter extends StatelessWidget {
                 padding: const EdgeInsets.only(right: 12),
                 child: InkWell(
                   onTap: () {
+                    // Triggers the filter event in the BLoC
                     context.read<SessionBloc>().add(FilterSessions(category));
                   },
                   borderRadius: BorderRadius.circular(22),
@@ -161,6 +175,7 @@ class CategoryFilter extends StatelessWidget {
                     child: Row(
                       children: [
                         if (isLive) ...[
+                          // Visual dot for Live category
                           Icon(
                             Icons.circle, 
                             size: 8, 

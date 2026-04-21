@@ -2,31 +2,38 @@ import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import '../../data/models/session_model.dart';
 
+/// Service class responsible for SQLite database management.
+/// Handles session caching, booking persistence, and local state management.
 class DatabaseHelper {
   static final DatabaseHelper _instance = DatabaseHelper._internal();
   static Database? _database;
 
+  /// Singleton factory constructor.
   factory DatabaseHelper() => _instance;
 
   DatabaseHelper._internal();
 
+  /// Returns the database instance, initializing it if it doesn't exist.
   Future<Database> get database async {
     if (_database != null) return _database!;
     _database = await _initDatabase();
     return _database!;
   }
 
+  /// Initializes the database on the device.
   Future<Database> _initDatabase() async {
     String path = join(await getDatabasesPath(), 'sessions.db');
     return await openDatabase(
       path,
-      version: 2, // Incremented version
+      version: 2,
       onCreate: _onCreate,
       onUpgrade: _onUpgrade,
     );
   }
 
+  /// Creates tables when the database is first initialized.
   Future<void> _onCreate(Database db, int version) async {
+    // Sessions table stores cached data from the API
     await db.execute('''
       CREATE TABLE sessions(
         id TEXT PRIMARY KEY,
@@ -43,6 +50,7 @@ class DatabaseHelper {
       )
     ''');
     
+    // Bookings table for tracking user registrations
     await db.execute('''
       CREATE TABLE bookings(
         sessionId TEXT PRIMARY KEY
@@ -50,20 +58,19 @@ class DatabaseHelper {
     ''');
   }
 
+  /// Handles database schema updates (e.g., adding hasJoined column).
   Future<void> _onUpgrade(Database db, int oldVersion, int newVersion) async {
     if (oldVersion < 2) {
       await db.execute('ALTER TABLE sessions ADD COLUMN hasJoined INTEGER DEFAULT 0');
     }
   }
 
+  /// Saves a list of session models to the local database.
+  /// Uses "UPSERT" logic to update existing records while preserving local-only data.
   Future<void> cacheSessions(List<SessionModel> sessions) async {
     final db = await database;
     Batch batch = db.batch();
     for (var session in sessions) {
-      // We use insert with ConflictAlgorithm.replace, but we don't want to overwrite local-only state like hasJoined
-      // if it already exists. A better way in a real app would be a complex update or separate table.
-      // For this assignment, we'll try to preserve hasJoined if it's already 1.
-      
       batch.execute('''
         INSERT INTO sessions (id, title, description, instructor, startTime, duration, status, imageUrl, category, isBooked, hasJoined)
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
@@ -94,6 +101,7 @@ class DatabaseHelper {
     await batch.commit(noResult: true);
   }
 
+  /// Retrieves all cached sessions from the database.
   Future<List<SessionModel>> getCachedSessions() async {
     final db = await database;
     final List<Map<String, dynamic>> maps = await db.query('sessions');
@@ -106,6 +114,7 @@ class DatabaseHelper {
     });
   }
 
+  /// Records a session booking and updates its status in the cache.
   Future<void> insertBooking(String sessionId) async {
     final db = await database;
     await db.insert(
@@ -122,6 +131,7 @@ class DatabaseHelper {
     );
   }
 
+  /// Persistently marks a session as "joined" to handle REJOIN logic.
   Future<void> markSessionAsJoined(String sessionId) async {
     final db = await database;
     await db.update(
@@ -132,6 +142,7 @@ class DatabaseHelper {
     );
   }
 
+  /// Returns a list of all session IDs that have been booked by the user.
   Future<List<String>> getBookedSessionIds() async {
     final db = await database;
     final List<Map<String, dynamic>> maps = await db.query('bookings');
